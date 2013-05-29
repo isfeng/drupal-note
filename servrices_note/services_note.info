@@ -1,0 +1,6 @@
+name = Services Note
+description = Some notes about customize services
+package = note
+core = 7.x
+version = 7.x-0.1-dev
+dependencies[] = services

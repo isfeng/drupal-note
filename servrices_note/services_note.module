@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * implement hook_services_resources()    
+ */
+function services_note_services_resources() {
+  return array(
+   'resource_name' => array( //定義資源名稱
+     'retrieve' => array(  // http://your.domain/path_to_endpoint/resource_name/:id
+       'help' => 'Retrieves a resource_name', // API說明
+       'file' => array('type' => 'inc', 'module' => 'services_note', 'name' => 'resources/resource_callback'), // 實作callback function的檔案
+       'callback' => '_resource_retrieve', // 觸發程式
+       'access callback' => '_services_note_access',  // default 'user_access', 驗證授權
+       'args' => array(  //function 參數
+         array(
+           'name' => 'id',
+           'type' => 'int',
+           'description' => 'The id of the resource to get',
+           'source' => array('path' => '0'),
+           'optional' => FALSE,
+         ),
+       ),
+     ),
+     'index' => array( // http://your.domain/path_to_endpoint/resource_name
+       'help' => 'Retrieves a listing of resources.',
+       'file' => array('type' => 'inc', 'module' => 'services_note', 'name' => 'resources/resource_callback'),  // 實作callback function的檔案
+       'callback' => '_resource_index', // 觸發程式
+       'access callback' => '_services_note_access', // default 'user_access', 驗證授權
+     ),
+     'relationships' => array(
+        'relation' => array(  // http://your.domain/path_to_endpoint/resource_name/:id/relation
+          'file' => array('type' => 'inc', 'module' => 'services_note', 'name' => 'resources/resource_callback'),  // 實作callback function的檔案
+          'help'   => t('This method returns relations associated with this resource.'),
+          'access callback' => '_services_note_access',  // default 'user_access', 驗證授權
+          'callback' => '_resoure_relation',  // 觸發程式
+          'args'     => array(  //function 參數
+            array(
+              'name' => 'id',
+              'optional' => FALSE,
+              'source' => array('path' => 0),
+              'type' => 'int',
+              'description' => 'The id of the resource whose relation we are getting',
+            ),
+          ),
+        ),
+      ),
+   ),
+   
+  );
+}
+
+/**
+ * implement access callback
+ */
+function _services_note_access() {
+  return true;
+}
