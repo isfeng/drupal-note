@@ -1,6 +1,11 @@
 Drupal services note
 ====================
 
+Module reference
+----------------
+* https://drupal.org/project/services
+* https://gist.github.com/kylebrowning/affc9864487bb1b9c918
+
 
 How to customize services api
 -----------------------------
